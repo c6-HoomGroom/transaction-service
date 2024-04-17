@@ -1,12 +1,9 @@
 package id.ac.ui.cs.advprog.transactionsevice.model;
 
 import id.ac.ui.cs.advprog.transactionsevice.enums.DeliveryStatus;
-import lombok.Builder;
-import lombok.Setter;
 import lombok.Getter;
-import lombok.Singular;
+import lombok.Setter;
 
-import java.util.Set;
 import java.util.UUID;
 
 @Getter @Setter
@@ -19,16 +16,12 @@ public class Transaction {
     private double totalPrice;
     private String deliveryStatus;
 
-    public Transaction(UUID id, Product product, String userId, int quantity) {
-        if (product == null) {
-            throw new IllegalArgumentException();
-        } else {
-            this.id = id;
-            this.product = product;
-            this.userId = userId;
-            this.quantity = quantity;
-            this.deliveryStatus = DeliveryStatus.WAITING_VERIFICATION.getValue();
-            this.totalPrice = product.getPrice()*quantity;
-        }
+    // Private constructor to enforce the use of the builder
+    public Transaction() {
+    }
+
+    // Static method to create the builder
+    public static TransactionBuilder builder() {
+        return new TransactionBuilder();
     }
 }
