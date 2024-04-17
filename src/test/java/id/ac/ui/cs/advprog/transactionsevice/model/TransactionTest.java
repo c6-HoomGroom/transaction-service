@@ -1,8 +1,15 @@
+package id.ac.ui.cs.advprog.transactionsevice.model;
+
+import id.ac.ui.cs.advprog.transactionsevice.enums.DeliveryStatus;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Set;
+import java.util.HashSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -25,19 +32,19 @@ class TransactionTest{
     }
 
     @Test
-    void testCreateOrderEmptyProduct(){
+    void testCreateTransactionEmptyProduct(){
         assertThrows(IllegalArgumentException.class, () -> {
-            Order order = new Order("13652556-012a-4c07-b546-54eb1396d79b", "13652556-012a-4c07-b546-54eb1396d79c", null);
+            Transaction transaction = new Transaction(UUID.fromString("13652556-012a-4c07-b546-54eb1396d79b"), null, "13652556-012a-4c07-b546-54eb1396d79b", 2);
         });
     }
 
     @Test
-    void testCreateOrder() {
-        Order order = new Order("eb558e9f-1c39-460e-8860-71af6af63bd6", product, "13652556-012a-4c07-b546-54eb1396d79b", 2, 1000, "WAITING");
-        assertEquals("13652556-012a-4c07-b546-54eb1396d79b", order.getIdUser());
-        assertEquals(ShippingStatus.WAITING.getValue(), order.getShippingStatus());
-        assertEquals(1000, order.getTotalPrice);
-        assertEquals(2, order.getQuantity);
+    void testCreateTransactionWithoutPromo() {
+        Transaction transaction = new Transaction(UUID.fromString("13652556-012a-4c07-b546-54eb1396d79b"), product, "13652556-012a-4c07-b546-54eb1396d79b", 2);
+        assertEquals("13652556-012a-4c07-b546-54eb1396d79b", transaction.getUserId());
+        assertEquals(DeliveryStatus.WAITING_VERIFICATION.getValue(), transaction.getDeliveryStatus());
+        assertEquals(600000, transaction.getTotalPrice());
+        assertEquals(2, transaction.getQuantity());
     }
 
 }
