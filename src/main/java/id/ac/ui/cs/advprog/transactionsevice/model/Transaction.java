@@ -3,6 +3,7 @@ package id.ac.ui.cs.advprog.transactionsevice.model;
 import id.ac.ui.cs.advprog.transactionsevice.enums.DeliveryStatus;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Builder;
 
 import java.util.UUID;
 
