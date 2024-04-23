@@ -38,4 +38,8 @@ public class TransactionRepository {
         }
         return null;
     }
+
+    public List<Transaction> getAllTransactions() {
+        return transactionData;
+    }
 }
