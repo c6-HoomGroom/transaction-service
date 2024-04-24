@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create New Transaction</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container mt-3">
+    <h3>Create New Transaction</h3>
+
+    <form th:action="@{/create}" th:object="${transaction}" method="post">
+        <!-- ID Field -->
+        <div class="form-group">
+            <label for="id">Transaction ID:</label>
+            <input type="text" class="form-control" id="id" name="id" th:field="*{id}" placeholder="Enter Transaction ID" required>
+        </div>
+
+        <!-- Product Field -->
+        <div class="form-group">
+            <label for="product">Product OBJECT:</label>
+            <input type="text" class="form-control" id="product" name="product.name" th:field="*{product}" placeholder="Enter Product Name" required>
+        </div>
+
+        <!-- User ID Field -->
+        <div class="form-group">
+            <label for="userId">User ID:</label>
+            <input type="text" class="form-control" id="userId" name="userId" th:field="*{userId}" placeholder="Enter User ID" required>
+        </div>
+
+        <!-- Quantity Field -->
+        <div class="form-group">
+            <label for="quantity">Quantity:</label>
+            <input type="number" class="form-control" id="quantity" name="quantity" th:field="*{quantity}" placeholder="Enter Quantity" required>
+        </div>
+
+        <!-- Voucher ID Field -->
+        <div class="form-group">
+            <label for="voucherId">Voucher ID:</label>
+            <input type="text" class="form-control" id="voucherId" name="voucherId" th:field="*{promoCodeId}" placeholder="Enter Voucher ID (optional)">
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3jvFtdjQ5MFhT9Sw0Fe7y5oRrRkG6EepstRw5U+G16YLQYcpmm"
+        crossorigin="anonymous"></script>
+</body>
+</html>

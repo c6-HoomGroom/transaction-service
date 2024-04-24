@@ -2,6 +2,7 @@ package id.ac.ui.cs.advprog.transactionsevice.service;
 
 import id.ac.ui.cs.advprog.transactionsevice.model.Product;
 import id.ac.ui.cs.advprog.transactionsevice.model.Transaction;
+import id.ac.ui.cs.advprog.transactionsevice.repository.ProductRepository;
 import id.ac.ui.cs.advprog.transactionsevice.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,15 +17,16 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Autowired
     private TransactionRepository transactionRepository;
-
+    private ProductRepository productRepository;
     @Override
-    public Transaction addTransaction(String id, Product product, String userId, int quantity, String voucherId){
-        if (transactionRepository.findById(id) == null){
-            Transaction transaction = Transaction.builder()
-                    .id(UUID.fromString(id))
+    public Transaction addTransaction(Transaction transaction){
+        if (transactionRepository.findById(transaction.getId().toString()) == null){
+            Product product = productRepository.findById(UUID.fromString(transaction.getProduct().toString()));
+            Transaction newTransaction = Transaction.builder()
+                    .id(transaction.getId())
                     .product(product)
-                    .userId(userId)
-                    .quantity(quantity)
+                    .userId(transaction.getUserId())
+                    .quantity(transaction.getQuantity())
                     .build();
 
             transactionRepository.save(transaction);

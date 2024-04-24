@@ -69,7 +69,7 @@ public class TransactionServiceImplTest {
 
         doReturn(transaction).when(transactionRepository).save(any(Transaction.class));
 
-        Transaction result = transactionService.addTransaction(transaction.getId().toString(), transaction.getProduct(), transaction.getUserId(), transaction.getQuantity(), null);
+        Transaction result = transactionService.addTransaction(transaction);
 
         verify(transactionRepository, times(1)).save(any(Transaction.class));
         assertEquals(transaction.getId(), result.getId());
