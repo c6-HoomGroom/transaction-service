@@ -84,6 +84,31 @@ public class TransactionServiceImplTest {
         assertEquals(transaction.getId(), result.getId());
         assertEquals("TIBA", result.getDeliveryStatus());
         verify(transactionRepository, times(1)).save(any(Transaction.class));
+    }
 
+    @Test
+    void testDeleteTransaction(){
+        Product mockProduct = Product.builder()
+                .name("Kursi Kayu")
+                .tag(new Tag("Wooden"))
+                .tag(new Tag("Chair"))
+                .description("Produk ini adalah kursi kayu sederhana yang cocok untuk ruangan mana saja.")
+                .image("https://i.ibb.co/KzQjH3p/sam-moghadam-khamseh-kvmds-Tr-GOBM-unsplash.jpg")
+                .price(300000)
+                .discountPrice(270000)
+                .build();
+
+        Transaction mockTransaction = Transaction.builder()
+                .id(UUID.fromString("13652556-012a-4c07-b546-54eb1396d79b"))
+                .product(mockProduct)
+                .userId("13652556-012a-4c07-b546-54eb1396d79b")
+                .quantity(2)
+                .build();
+
+        when(transactionRepository.delete("13652556-012a-4c07-b546-54eb1396d79b")).thenReturn(mockTransaction);
+
+        Transaction deleted = transactionService.delete("13652556-012a-4c07-b546-54eb1396d79b");
+
+        assertEquals(mockTransaction.getId(), deleted.getId());
     }
 }
