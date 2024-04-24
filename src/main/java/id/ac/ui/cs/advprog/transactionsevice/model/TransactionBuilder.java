@@ -44,7 +44,11 @@ public class TransactionBuilder {
     }
 
     public TransactionBuilder deliveryStatus(String deliveryStatus) {
-        this.deliveryStatus = deliveryStatus;
+        if (DeliveryStatus.contains(deliveryStatus)) {  // Ensure it's a valid status
+            this.deliveryStatus = deliveryStatus;
+        } else {
+            throw new IllegalArgumentException("Invalid delivery status: " + deliveryStatus);
+        }
         return this;
     }
 

@@ -36,15 +36,17 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public Transaction setDeliveryStatus(Transaction transaction, String deliveryStatus){
         if (transaction != null){
+            Transaction updatedTransaction = Transaction.builder() // Start a new builder
+                    .id(transaction.getId()) // Copy existing attributes
+                    .product(transaction.getProduct())
+                    .userId(transaction.getUserId())
+                    .promoCodeId(transaction.getPromoCodeId())
+                    .quantity(transaction.getQuantity())
+                    .deliveryStatus(deliveryStatus) // Set the new delivery status
+                    .build(); // Build the new transaction
 
-            if (deliveryStatus.equals("SUCCESS")){
-                transaction.setDeliveryStatus("SUCCESS");
-            } else if (deliveryStatus.equals("REJECTED")){
-                transaction.setDeliveryStatus("FAILED");
-            }
-
-            transactionRepository.save(transaction);
-            return transaction;
+            transactionRepository.save(updatedTransaction);
+            return updatedTransaction;
         }else {
             throw new NoSuchElementException();
         }

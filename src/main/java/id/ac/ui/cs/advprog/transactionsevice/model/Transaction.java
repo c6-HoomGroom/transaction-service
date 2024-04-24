@@ -25,4 +25,5 @@ public class Transaction {
     public static TransactionBuilder builder() {
         return new TransactionBuilder();
     }
+
 }

@@ -79,10 +79,10 @@ public class TransactionServiceImplTest {
     void testSetDeliveryStatus(){
         Transaction transaction = transactions.get(0);
 
-        Transaction result = transactionService.setDeliveryStatus(transaction, "SUCCESS");
+        Transaction result = transactionService.setDeliveryStatus(transaction, "TIBA");
 
         assertEquals(transaction.getId(), result.getId());
-        assertEquals("SUCCESS", result.getDeliveryStatus());
+        assertEquals("TIBA", result.getDeliveryStatus());
         verify(transactionRepository, times(1)).save(any(Transaction.class));
 
     }

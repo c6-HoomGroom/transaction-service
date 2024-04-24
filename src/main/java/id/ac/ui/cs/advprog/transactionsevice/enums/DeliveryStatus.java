@@ -18,11 +18,13 @@ public enum DeliveryStatus {
 
     public static boolean contains(String param){
         for (DeliveryStatus deliveryStatus : DeliveryStatus.values()){
-            if (deliveryStatus.name().equals(param)){
+            if (deliveryStatus.getValue().equals(param)){
                 return true; //berarti valid
             }
         }
 
         return false;
     }
+
+
 }
