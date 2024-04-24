@@ -42,4 +42,24 @@ public class TransactionRepository {
     public List<Transaction> getAllTransactions() {
         return transactionData;
     }
+
+    public Transaction delete(String id) {
+        Transaction product = findById(id);
+        if (product == null){
+            return null;
+        }
+        int index = findIndex(product);
+        transactionData.remove(index);
+
+        return product;
+    }
+
+    public int findIndex(Transaction transaction){
+        for (int i = 0; i < transactionData.size(); i++) {
+            if (transactionData.get(i).getId().equals(transaction.getId())) {
+                return i;
+            }
+        }
+        return -1;
+    }
 }
