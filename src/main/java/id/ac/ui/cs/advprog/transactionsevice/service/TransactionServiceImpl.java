@@ -62,4 +62,8 @@ public class TransactionServiceImpl implements TransactionService {
         return transactionRepository.getAllTransactions();
     }
 
+    @Override
+    public Transaction delete(String id){
+        return transactionRepository.delete(id);
+    }
 }

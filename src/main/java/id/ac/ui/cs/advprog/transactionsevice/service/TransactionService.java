@@ -10,5 +10,6 @@ public interface TransactionService {
     Transaction setDeliveryStatus(Transaction transaction, String deliveryStatus);
     Transaction getTransaction(String id);
     List<Transaction> getAllTransactions();
+    Transaction delete(String id);
 
 }
