@@ -30,10 +30,10 @@ public class TransactionRepository {
 
     public Transaction findById(String id){
         UUID uuidId = UUID.fromString(id); // Convert input ID to UUID
-        for (Transaction savedOrder : transactionData){
-            UUID savedOrderId = UUID.fromString(savedOrder.getId().toString()); // Ensure comparison is UUID-based
-            if (savedOrderId.equals(uuidId)){
-                return savedOrder;
+        for (Transaction savedTransaction : transactionData){
+            UUID savedTransactionId = UUID.fromString(savedTransaction.getId().toString()); // Ensure comparison is UUID-based
+            if (savedTransactionId.equals(uuidId)){
+                return savedTransaction;
             }
         }
         return null;
