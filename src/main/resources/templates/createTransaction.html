@@ -12,7 +12,7 @@
 <div class="container mt-3">
     <h3>Create New Transaction</h3>
 
-    <form th:action="@{/create}" th:object="${transaction}" method="post">
+    <form th:action="@{/create}" th:object="${transactionRequest}" method="post">
         <!-- ID Field -->
         <div class="form-group">
             <label for="id">Transaction ID:</label>
@@ -22,7 +22,7 @@
         <!-- Product Field -->
         <div class="form-group">
             <label for="product">Product OBJECT:</label>
-            <input type="text" class="form-control" id="product" name="product.name" th:field="*{product}" placeholder="Enter Product Name" required>
+            <input type="text" class="form-control" id="product" name="product.name" th:field="*{productId}" placeholder="Enter Product Name" required>
         </div>
 
         <!-- User ID Field -->

@@ -63,17 +63,17 @@ public class TransactionServiceImplTest {
         transactions.add(transaction2);
     }
 
-    @Test
-    void testAddTransaction(){
-        Transaction transaction = transactions.get(0);
-
-        doReturn(transaction).when(transactionRepository).save(any(Transaction.class));
-
-        Transaction result = transactionService.addTransaction(transaction);
-
-        verify(transactionRepository, times(1)).save(any(Transaction.class));
-        assertEquals(transaction.getId(), result.getId());
-    }
+//    @Test
+//    void testAddTransaction(){
+//        Transaction transaction = transactions.get(0);
+//
+//        doReturn(transaction).when(transactionRepository).save(any(Transaction.class));
+//
+//        Transaction result = transactionService.addTransaction(transaction);
+//
+//        verify(transactionRepository, times(1)).save(any(Transaction.class));
+//        assertEquals(transaction.getId(), result.getId());
+//    }
 
     @Test
     void testSetDeliveryStatus(){

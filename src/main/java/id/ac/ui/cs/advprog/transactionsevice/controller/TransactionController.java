@@ -1,5 +1,6 @@
 package id.ac.ui.cs.advprog.transactionsevice.controller;
 import id.ac.ui.cs.advprog.transactionsevice.model.Transaction;
+import id.ac.ui.cs.advprog.transactionsevice.model.TransactionRequest;
 import id.ac.ui.cs.advprog.transactionsevice.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,9 +24,9 @@ public class TransactionController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createProductPost(@ModelAttribute Transaction transaction, Model model){
+    public ResponseEntity<String> createProductPost(@ModelAttribute TransactionRequest transactionRequest, Model model){
         try {
-            transactionService.addTransaction(transaction);
+            transactionService.addTransaction(transactionRequest);
             return new ResponseEntity<>("Transaction created successfully.", HttpStatus.CREATED); // 201 Created
         } catch (IllegalArgumentException ex) {
             return new ResponseEntity<>("Invalid data provided: " + ex.getMessage(), HttpStatus.BAD_REQUEST); // 400 Bad Request
@@ -36,8 +37,8 @@ public class TransactionController {
 
     @GetMapping("/create")
     public String createProductPage(Model model){
-        Transaction transaction = new Transaction();
-        model.addAttribute("transaction", transaction);
+        TransactionRequest transactionRequest = new TransactionRequest();
+        model.addAttribute("transactionRequest", transactionRequest);
         return "createTransaction";
     }
 }

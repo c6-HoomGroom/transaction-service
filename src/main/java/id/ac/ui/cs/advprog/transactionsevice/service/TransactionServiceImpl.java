@@ -2,10 +2,13 @@ package id.ac.ui.cs.advprog.transactionsevice.service;
 
 import id.ac.ui.cs.advprog.transactionsevice.model.Product;
 import id.ac.ui.cs.advprog.transactionsevice.model.Transaction;
+import id.ac.ui.cs.advprog.transactionsevice.model.TransactionRequest;
 import id.ac.ui.cs.advprog.transactionsevice.repository.ProductRepository;
 import id.ac.ui.cs.advprog.transactionsevice.repository.TransactionRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Map;
@@ -17,20 +20,33 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Autowired
     private TransactionRepository transactionRepository;
+
+    @Autowired
+    private RestTemplate restTemplate;
     private ProductRepository productRepository;
     @Override
-    public Transaction addTransaction(Transaction transaction){
-        if (transactionRepository.findById(transaction.getId().toString()) == null){
-            Product product = productRepository.findById(UUID.fromString(transaction.getProduct().toString()));
+    public Transaction addTransaction(TransactionRequest transactionRequest){
+
+        String productId = transactionRequest.getProductId();
+
+        // Constructing the URL to fetch the product
+        String url = "https://product-service-uflspwyoiq-ew.a.run.app/products/api/id/" + productId;
+
+        // Fetch the product using RestTemplate
+        Product product = restTemplate.getForObject(url, Product.class);
+
+        if (transactionRepository.findById(transactionRequest.getId().toString()) == null){
             Transaction newTransaction = Transaction.builder()
-                    .id(transaction.getId())
+                    .id(transactionRequest.getId())
                     .product(product)
-                    .userId(transaction.getUserId())
-                    .quantity(transaction.getQuantity())
+                    .userId(transactionRequest.getUserId())
+                    .quantity(transactionRequest.getQuantity())
                     .build();
 
-            transactionRepository.save(transaction);
-            return transaction;
+            System.out.println(newTransaction.getUserId());
+
+            transactionRepository.save(newTransaction);
+            return newTransaction;
         }
         return null;
     }
