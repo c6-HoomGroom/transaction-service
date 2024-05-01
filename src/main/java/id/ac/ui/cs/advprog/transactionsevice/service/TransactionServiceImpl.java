@@ -43,7 +43,6 @@ public class TransactionServiceImpl implements TransactionService {
                     .quantity(transactionRequest.getQuantity())
                     .build();
 
-            System.out.println(newTransaction.getUserId());
 
             transactionRepository.save(newTransaction);
             return newTransaction;

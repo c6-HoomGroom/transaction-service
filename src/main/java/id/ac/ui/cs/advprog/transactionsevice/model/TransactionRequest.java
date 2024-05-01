@@ -16,6 +16,7 @@ public class TransactionRequest {
     private int quantity;
 
     public TransactionRequest() {
+        this.id = UUID.randomUUID();
     }
 
     public TransactionRequest(UUID id, String productId, String userId, String promoCodeId, int quantity) {

@@ -12,6 +12,10 @@ public class TransactionBuilder {
     private double totalPrice;
     private String deliveryStatus = DeliveryStatus.WAITING_VERIFICATION.getValue();
 
+    public TransactionBuilder() {
+        this.id = UUID.randomUUID();
+    }
+
     public TransactionBuilder id(UUID id) {
         this.id = id;
         return this;

@@ -14,20 +14,16 @@
 
     <form th:action="@{/create}" th:object="${transactionRequest}" method="post">
         <!-- ID Field -->
-        <div class="form-group">
-            <label for="id">Transaction ID:</label>
-            <input type="text" class="form-control" id="id" name="id" th:field="*{id}" placeholder="Enter Transaction ID" required>
-        </div>
 
         <!-- Product Field -->
         <div class="form-group">
-            <label for="product">Product OBJECT:</label>
+            <label for="product">Product Id:</label>
             <input type="text" class="form-control" id="product" name="product.name" th:field="*{productId}" placeholder="Enter Product Name" required>
         </div>
 
         <!-- User ID Field -->
         <div class="form-group">
-            <label for="userId">User ID:</label>
+            <label for="userId">User Id:</label>
             <input type="text" class="form-control" id="userId" name="userId" th:field="*{userId}" placeholder="Enter User ID" required>
         </div>
 

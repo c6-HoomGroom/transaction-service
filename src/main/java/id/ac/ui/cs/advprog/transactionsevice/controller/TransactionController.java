@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
+
 @Controller
 @RequestMapping("")
 public class TransactionController {
@@ -24,21 +27,25 @@ public class TransactionController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> createProductPost(@ModelAttribute TransactionRequest transactionRequest, Model model){
-        try {
+    public String createProductPost(@ModelAttribute TransactionRequest transactionRequest, Model model) {
+
             transactionService.addTransaction(transactionRequest);
-            return new ResponseEntity<>("Transaction created successfully.", HttpStatus.CREATED); // 201 Created
-        } catch (IllegalArgumentException ex) {
-            return new ResponseEntity<>("Invalid data provided: " + ex.getMessage(), HttpStatus.BAD_REQUEST); // 400 Bad Request
-        } catch (Exception ex) {
-            return new ResponseEntity<>("An unexpected error occurred: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); // 500 Internal Server Error
-        }
+            return "redirect:/listTransaction";
+
     }
+
 
     @GetMapping("/create")
     public String createProductPage(Model model){
         TransactionRequest transactionRequest = new TransactionRequest();
         model.addAttribute("transactionRequest", transactionRequest);
         return "createTransaction";
+    }
+
+    @GetMapping("/listTransaction")
+    public String transactionListPage(Model model) {
+        List<Transaction> allTransacions = transactionService.getAllTransactions();
+        model.addAttribute("transactions", allTransacions);
+        return "listTransactions";
     }
 }
