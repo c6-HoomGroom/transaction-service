@@ -20,7 +20,7 @@ public class TransactionRequest {
     }
 
     public TransactionRequest(UUID id, String productId, String userId, String promoCodeId, int quantity) {
-        this.id = id;
+        this.id = (id != null ? id : UUID.randomUUID());
         this.productId = productId;
         this.userId = userId;
         this.promoCodeId = promoCodeId;

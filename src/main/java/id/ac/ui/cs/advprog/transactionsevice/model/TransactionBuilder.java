@@ -5,9 +5,9 @@ import java.util.UUID;
 
 public class TransactionBuilder {
     private UUID id = UUID.randomUUID();
-    private Product product;
-    private String userId;
-    private String promoCodeId;
+    private UUID productId;
+    private UUID userId;
+    private UUID promoCodeId;
     private int quantity = 1;  // Default quantity
     private double totalPrice;
     private String deliveryStatus = DeliveryStatus.WAITING_VERIFICATION.getValue();
@@ -21,20 +21,20 @@ public class TransactionBuilder {
         return this;
     }
 
-    public TransactionBuilder product(Product product) {
-        if (product == null) {
+    public TransactionBuilder productId(UUID productId) {
+        if (productId == null) {
             throw new IllegalArgumentException("Product cannot be null");
         }
-        this.product = product;
+        this.productId = productId;
         return this;
     }
 
-    public TransactionBuilder userId(String userId) {
+    public TransactionBuilder userId(UUID userId) {
         this.userId = userId;
         return this;
     }
 
-    public TransactionBuilder promoCodeId(String promoCodeId) {
+    public TransactionBuilder promoCodeId(UUID promoCodeId) {
         this.promoCodeId = promoCodeId;
         return this;
     }
@@ -44,6 +44,11 @@ public class TransactionBuilder {
             throw new IllegalArgumentException("Quantity must be greater than zero");
         }
         this.quantity = quantity;
+        return this;
+    }
+
+    public TransactionBuilder totalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
         return this;
     }
 
@@ -57,24 +62,9 @@ public class TransactionBuilder {
     }
 
     public Transaction build() {
-        if (this.product == null) {
-            throw new IllegalStateException("Product is not set");
-        }
-
-        if (this.product.getDiscountPrice() != 0) {
-            this.totalPrice = this.product.getDiscountPrice() * this.quantity;
-        } else {
-            this.totalPrice = this.product.getPrice() * this.quantity;
-        }
-
-        if (this.promoCodeId != null && !this.promoCodeId.isEmpty()) {
-            this.totalPrice *= 0.8;
-        }
-
-
         Transaction transaction = new Transaction();
         transaction.setId(this.id);
-        transaction.setProduct(this.product);
+        transaction.setProductId(this.productId);
         transaction.setUserId(this.userId);
         transaction.setPromoCodeId(this.promoCodeId);
         transaction.setQuantity(this.quantity);

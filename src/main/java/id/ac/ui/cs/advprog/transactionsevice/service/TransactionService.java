@@ -5,12 +5,14 @@ import java.util.List;
 import id.ac.ui.cs.advprog.transactionsevice.model.Product;
 import id.ac.ui.cs.advprog.transactionsevice.model.Transaction;
 import id.ac.ui.cs.advprog.transactionsevice.model.TransactionRequest;
+import java.util.UUID;
+
 
 public interface TransactionService {
-    Transaction addTransaction(TransactionRequest transaction);
+    Transaction addTransaction(Transaction transaction);
     Transaction setDeliveryStatus(Transaction transaction, String deliveryStatus);
-    Transaction getTransaction(String id);
+    Transaction getTransaction(UUID id);
     List<Transaction> getAllTransactions();
-    Transaction delete(String id);
+    void deleteTransaction(UUID id);
 
 }

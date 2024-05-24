@@ -27,11 +27,9 @@ public class TransactionController {
     }
 
     @PostMapping("/create")
-    public String createProductPost(@ModelAttribute TransactionRequest transactionRequest, Model model) {
-
+    public String createProductPost(@ModelAttribute Transaction transactionRequest, Model model) {
             transactionService.addTransaction(transactionRequest);
             return "redirect:/listTransaction";
-
     }
 
 
