@@ -14,5 +14,8 @@ public interface TransactionService {
     Transaction getTransaction(UUID id);
     List<Transaction> getAllTransactions();
     void deleteTransaction(UUID id);
+    Transaction updateTransaction(UUID id, Transaction transactionDetails);
+
+    List<Transaction> getTransactionByUserId(UUID id);
 
 }

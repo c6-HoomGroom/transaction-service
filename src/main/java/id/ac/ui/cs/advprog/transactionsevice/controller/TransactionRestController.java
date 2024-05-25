@@ -19,9 +19,12 @@ public class TransactionRestController
     private TransactionService transactionService;
 
     @GetMapping("/id/{id}")
-    public Transaction getTransactionById(@PathVariable UUID id) {
+    public ResponseEntity<Transaction> getTransactionById(@PathVariable UUID id) {
         Transaction transaction = transactionService.getTransaction(id);
-        return transaction;
+        if (transaction == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(transaction);
     }
 
     @PostMapping("/create")
@@ -31,8 +34,30 @@ public class TransactionRestController
         return ResponseEntity.ok(createdTransaction);
     }
 
-    @GetMapping("/all-transactions")
-    public List<Transaction> getAllTransactions() {
-        return transactionService.getAllTransactions();
+    @GetMapping("/all")
+    public ResponseEntity<List<Transaction>> getAllTransactions() {
+        List<Transaction> transactions = transactionService.getAllTransactions();
+        return ResponseEntity.ok(transactions);
+    }
+
+    @GetMapping("/all/{id}")
+    public ResponseEntity<List<Transaction>> getAllUserTransactions(@PathVariable UUID id) {
+        List<Transaction> transactions = transactionService.getTransactionByUserId(id);
+        return ResponseEntity.ok(transactions);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<List<Transaction>> deleteTransactions(@PathVariable UUID id) {
+        transactionService.deleteTransaction(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Transaction> updateTransaction(@PathVariable UUID id, @RequestBody Transaction transactionDetails) {
+        Transaction updatedTransaction = transactionService.updateTransaction(id, transactionDetails);
+        if (updatedTransaction == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(updatedTransaction);
     }
 }

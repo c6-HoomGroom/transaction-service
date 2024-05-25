@@ -57,6 +57,7 @@ public class TransactionServiceImpl implements TransactionService {
                     .totalPrice(totalPrice)
                     .build();
             transactionRepository.save(newTransaction);
+            System.out.println("NEW TRANSACTION"+newTransaction.getId());
             return newTransaction;
         }
         return null;
@@ -85,6 +86,28 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public void deleteTransaction(UUID id) {
         transactionRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Transaction> getTransactionByUserId(UUID id){
+        return transactionRepository.findByUserId(id);
+    }
+
+    @Override
+    public Transaction updateTransaction(UUID id, Transaction transactionDetails) {
+        Optional<Transaction> optionalTransaction = transactionRepository.findById(id);
+        if (optionalTransaction.isPresent()) {
+            Transaction existingTransaction = optionalTransaction.get();
+            existingTransaction.setProductId(transactionDetails.getProductId());
+            existingTransaction.setUserId(transactionDetails.getUserId());
+            existingTransaction.setPromoCodeId(transactionDetails.getPromoCodeId());
+            existingTransaction.setQuantity(transactionDetails.getQuantity());
+            existingTransaction.setTotalPrice(transactionDetails.getTotalPrice());
+            existingTransaction.setDeliveryStatus(transactionDetails.getDeliveryStatus());
+            return transactionRepository.save(existingTransaction);
+        } else {
+            return null; // Or throw an exception
+        }
     }
 
     public double calculatePrice(Product product, Transaction transactionRequest) {
