@@ -2,6 +2,7 @@ package id.ac.ui.cs.advprog.transactionsevice.service;
 
 import id.ac.ui.cs.advprog.transactionsevice.model.Product;
 import id.ac.ui.cs.advprog.transactionsevice.model.Transaction;
+import id.ac.ui.cs.advprog.transactionsevice.model.TransactionBuilder;
 import id.ac.ui.cs.advprog.transactionsevice.repository.ProductRepository;
 import id.ac.ui.cs.advprog.transactionsevice.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class TransactionServiceImpl implements TransactionService {
     private ProductRepository productRepository;
 
     @Override
-    public Transaction addTransaction(Transaction transactionRequest){
+    public Transaction addTransaction(Transaction transactionRequest) {
 
         String productId = transactionRequest.getProductId().toString();
 
@@ -40,24 +41,24 @@ public class TransactionServiceImpl implements TransactionService {
             throw new NoSuchElementException("Product not found");
         }
 
-        System.out.println(transactionRequest.getId());
-        System.out.println(transactionRequest.getProductId());
-        System.out.println(transactionRequest.getUserId());
-        System.out.println(transactionRequest.getQuantity());
-        System.out.println(productId);
-
         Optional<Transaction> existingTransaction = transactionRepository.findById(transactionRequest.getId());
         if (!existingTransaction.isPresent()) {
             double totalPrice = calculatePrice(product, transactionRequest);
-            Transaction newTransaction = Transaction.builder()
+            TransactionBuilder builder = Transaction.builder()
                     .id(transactionRequest.getId())
                     .productId(transactionRequest.getProductId())
                     .userId(transactionRequest.getUserId())
-                    .quantity(transactionRequest.getQuantity())
                     .totalPrice(totalPrice)
-                    .build();
+                    .quantity(transactionRequest.getQuantity());
+
+            // Optionally include promoCodeId if it exists
+            if (transactionRequest.getPromoCodeId() != null) {
+                builder.promoCodeId(transactionRequest.getPromoCodeId());
+            }
+
+            Transaction newTransaction = builder.build();
             transactionRepository.save(newTransaction);
-            System.out.println("NEW TRANSACTION"+newTransaction.getId());
+            System.out.println("NEW TRANSACTION: " + newTransaction.getId());
             return newTransaction;
         }
         return null;
@@ -89,7 +90,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public List<Transaction> getTransactionByUserId(UUID id){
+    public List<Transaction> getTransactionByUserId(UUID id) {
         return transactionRepository.findByUserId(id);
     }
 
@@ -98,13 +99,28 @@ public class TransactionServiceImpl implements TransactionService {
         Optional<Transaction> optionalTransaction = transactionRepository.findById(id);
         if (optionalTransaction.isPresent()) {
             Transaction existingTransaction = optionalTransaction.get();
-            existingTransaction.setProductId(transactionDetails.getProductId());
-            existingTransaction.setUserId(transactionDetails.getUserId());
-            existingTransaction.setPromoCodeId(transactionDetails.getPromoCodeId());
-            existingTransaction.setQuantity(transactionDetails.getQuantity());
-            existingTransaction.setTotalPrice(transactionDetails.getTotalPrice());
-            existingTransaction.setDeliveryStatus(transactionDetails.getDeliveryStatus());
-            return transactionRepository.save(existingTransaction);
+
+            TransactionBuilder builder = Transaction.builder()
+                    .id(existingTransaction.getId())
+                    .userId(existingTransaction.getUserId())
+                    .productId(existingTransaction.getProductId())
+                    .quantity(existingTransaction.getQuantity())
+                    .totalPrice(existingTransaction.getTotalPrice())
+                    .promoCodeId(existingTransaction.getPromoCodeId());
+
+            if (transactionDetails.getPromoCodeId() != null) {
+                double totalPrice = existingTransaction.getTotalPrice()*0.8;
+                builder.promoCodeId(transactionDetails.getPromoCodeId());
+                builder.totalPrice(totalPrice);
+            }
+
+            if (transactionDetails.getDeliveryStatus() != null) {
+                builder.deliveryStatus(transactionDetails.getDeliveryStatus());
+            }
+
+            Transaction newTransaction = builder.build();
+
+            return transactionRepository.save(newTransaction);
         } else {
             return null; // Or throw an exception
         }
@@ -112,9 +128,19 @@ public class TransactionServiceImpl implements TransactionService {
 
     public double calculatePrice(Product product, Transaction transactionRequest) {
         if (transactionRequest.getPromoCodeId() != null) {
-            return transactionRequest.getQuantity() * product.getDiscountPrice();
+            if (product.getDiscountPrice() != 0) {
+                return transactionRequest.getQuantity() * product.getDiscountPrice() * 0.8;
+            } else {
+                return transactionRequest.getQuantity() * product.getPrice() * 0.8;
+            }
         } else {
-            return transactionRequest.getQuantity() * product.getPrice();
+            if (product.getDiscountPrice() != 0) {
+                return transactionRequest.getQuantity() * product.getDiscountPrice();
+            } else {
+                return transactionRequest.getQuantity() * product.getPrice();
+            }
         }
     }
+
+
 }

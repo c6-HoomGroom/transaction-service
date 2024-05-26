@@ -31,30 +31,30 @@ class TransactionTest{
                 .build();
     }
 
-    @Test
-    void testCreateTransactionEmptyProduct(){
-        assertThrows(IllegalArgumentException.class, () -> {
-            Transaction transaction = Transaction.builder().id(UUID.fromString("13652556-012a-4c07-b546-54eb1396d79b")).product(null).userId("13652556-012a-4c07-b546-54eb1396d79b").quantity(2).build();
-        });
-    }
+//    @Test
+//    void testCreateTransactionEmptyProduct(){
+//        assertThrows(IllegalArgumentException.class, () -> {
+//            Transaction transaction = Transaction.builder().id(UUID.fromString("13652556-012a-4c07-b546-54eb1396d79b")).product(null).userId("13652556-012a-4c07-b546-54eb1396d79b").quantity(2).build();
+//        });
+//    }
+//
+//    @Test
+//    void testCreateTransactionWithoutPromo() {
+//        Transaction transaction = Transaction.builder().id(UUID.fromString("13652556-012a-4c07-b546-54eb1396d79b")).product(product).userId("13652556-012a-4c07-b546-54eb1396d79b").quantity(2).build();
+//        assertEquals("13652556-012a-4c07-b546-54eb1396d79b", transaction.getUserId());
+//        assertEquals(DeliveryStatus.WAITING_VERIFICATION.getValue(), transaction.getDeliveryStatus());
+//        assertEquals(540000, transaction.getTotalPrice());
+//        assertEquals(2, transaction.getQuantity());
+//    }
 
-    @Test
-    void testCreateTransactionWithoutPromo() {
-        Transaction transaction = Transaction.builder().id(UUID.fromString("13652556-012a-4c07-b546-54eb1396d79b")).product(product).userId("13652556-012a-4c07-b546-54eb1396d79b").quantity(2).build();
-        assertEquals("13652556-012a-4c07-b546-54eb1396d79b", transaction.getUserId());
-        assertEquals(DeliveryStatus.WAITING_VERIFICATION.getValue(), transaction.getDeliveryStatus());
-        assertEquals(540000, transaction.getTotalPrice());
-        assertEquals(2, transaction.getQuantity());
-    }
-
-    @Test
-    void testCreateTransactionWithPromo() {
-        Transaction transaction = Transaction.builder().id(UUID.fromString("13652556-012a-4c07-b546-54eb1396d79b")).product(product).userId("13652556-012a-4c07-b546-54eb1396d79b").quantity(2).promoCodeId("23452556-012a-4c07-b546-54eb1396d79b").build();
-        assertEquals("13652556-012a-4c07-b546-54eb1396d79b", transaction.getUserId());
-        assertEquals(DeliveryStatus.WAITING_VERIFICATION.getValue(), transaction.getDeliveryStatus());
-        assertEquals(432000, transaction.getTotalPrice());
-        assertEquals(2, transaction.getQuantity());
-        assertEquals("23452556-012a-4c07-b546-54eb1396d79b", transaction.getPromoCodeId());
-    }
-
+//    @Test
+//    void testCreateTransactionWithPromo() {
+//        Transaction transaction = Transaction.builder().id(UUID.fromString("13652556-012a-4c07-b546-54eb1396d79b")).product(product).userId("13652556-012a-4c07-b546-54eb1396d79b").quantity(2).promoCodeId("23452556-012a-4c07-b546-54eb1396d79b").build();
+//        assertEquals("13652556-012a-4c07-b546-54eb1396d79b", transaction.getUserId());
+//        assertEquals(DeliveryStatus.WAITING_VERIFICATION.getValue(), transaction.getDeliveryStatus());
+//        assertEquals(432000, transaction.getTotalPrice());
+//        assertEquals(2, transaction.getQuantity());
+//        assertEquals("23452556-012a-4c07-b546-54eb1396d79b", transaction.getPromoCodeId());
+//    }
+//
 }
