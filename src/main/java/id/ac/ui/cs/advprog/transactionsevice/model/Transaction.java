@@ -34,6 +34,9 @@ public class Transaction {
     @Column(name = "delivery_status", length = 50)
     private String deliveryStatus;
 
+    @Column(name = "transportation_type", length = 50)
+    private String transportationType;
+
     // Private constructor to enforce the use of the builder
     public Transaction() {
     }

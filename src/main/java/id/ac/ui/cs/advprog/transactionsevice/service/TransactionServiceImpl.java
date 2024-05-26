@@ -106,7 +106,8 @@ public class TransactionServiceImpl implements TransactionService {
                     .productId(existingTransaction.getProductId())
                     .quantity(existingTransaction.getQuantity())
                     .totalPrice(existingTransaction.getTotalPrice())
-                    .promoCodeId(existingTransaction.getPromoCodeId());
+                    .promoCodeId(existingTransaction.getPromoCodeId())
+                    .transportationType(existingTransaction.getTransportationType());
 
             if (transactionDetails.getPromoCodeId() != null) {
                 double totalPrice = existingTransaction.getTotalPrice()*0.8;
@@ -116,6 +117,10 @@ public class TransactionServiceImpl implements TransactionService {
 
             if (transactionDetails.getDeliveryStatus() != null) {
                 builder.deliveryStatus(transactionDetails.getDeliveryStatus());
+            }
+
+            if (transactionDetails.getTransportationType() != null) {
+                builder.transportationType(transactionDetails.getTransportationType());
             }
 
             Transaction newTransaction = builder.build();

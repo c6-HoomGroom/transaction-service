@@ -12,6 +12,8 @@ public class TransactionBuilder {
     private double totalPrice;
     private String deliveryStatus = DeliveryStatus.WAITING_VERIFICATION.getValue();
 
+    private String transportationType;
+
     public TransactionBuilder() {
         this.id = UUID.randomUUID();
     }
@@ -36,6 +38,11 @@ public class TransactionBuilder {
 
     public TransactionBuilder promoCodeId(UUID promoCodeId) {
         this.promoCodeId = promoCodeId;
+        return this;
+    }
+
+    public TransactionBuilder transportationType(String transportationType) {
+        this.transportationType = transportationType;
         return this;
     }
 
@@ -70,6 +77,7 @@ public class TransactionBuilder {
         transaction.setQuantity(this.quantity);
         transaction.setDeliveryStatus(this.deliveryStatus);
         transaction.setTotalPrice(this.totalPrice);
+        transaction.setTransportationType(this.transportationType);
         return transaction;
 
     }
