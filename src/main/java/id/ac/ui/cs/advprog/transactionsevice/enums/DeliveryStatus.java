@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum DeliveryStatus {
-    WAITING_VERIFICATION("MENUNGGU PEMBAYARAN"),
+    WAITING_VERIFICATION("MENUNGGU VERIFIKASI"),
     PROCESSING("DIPROSES"),
     SHIPPED("DIKIRIM"),
     ARRIVED("TIBA"),
