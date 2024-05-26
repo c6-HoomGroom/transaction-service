@@ -125,7 +125,7 @@ public class TransactionServiceImpl implements TransactionService {
             }
 
             if (transactionDetails.getShippingCode() != null) {
-                builder.transportationType(transactionDetails.getShippingCode());
+                builder.shippingCode(transactionDetails.getShippingCode());
             }
 
             Transaction newTransaction = builder.build();
