@@ -107,6 +107,7 @@ public class TransactionServiceImpl implements TransactionService {
                     .quantity(existingTransaction.getQuantity())
                     .totalPrice(existingTransaction.getTotalPrice())
                     .promoCodeId(existingTransaction.getPromoCodeId())
+                    .shippingCode(existingTransaction.getShippingCode())
                     .transportationType(existingTransaction.getTransportationType());
 
             if (transactionDetails.getPromoCodeId() != null) {
@@ -121,6 +122,10 @@ public class TransactionServiceImpl implements TransactionService {
 
             if (transactionDetails.getTransportationType() != null) {
                 builder.transportationType(transactionDetails.getTransportationType());
+            }
+
+            if (transactionDetails.getShippingCode() != null) {
+                builder.transportationType(transactionDetails.getShippingCode());
             }
 
             Transaction newTransaction = builder.build();
